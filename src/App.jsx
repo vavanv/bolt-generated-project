@@ -1,28 +1,36 @@
-import React from 'react';
-    import { Container, Grid, Paper, Typography, TextField, Button } from '@mui/material';
+import React, { useState } from 'react';
+    import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText } from '@mui/material';
+    import MenuIcon from '@mui/icons-material/Menu';
 
     const App = () => {
+      const [open, setOpen] = useState(false);
+
+      const toggleDrawer = () => {
+        setOpen(!open);
+      };
+
+      const menuItems = ['Home', 'Login'];
+
       return (
-        <Container>
-          <Grid container spacing={2}>
-            <Grid item xs={3}>
-              <Paper elevation={3} style={{ padding: '16px' }}>
-                <Typography variant="h6">Menu</Typography>
-                <Button fullWidth variant="contained" color="primary">Item 1</Button>
-                <Button fullWidth variant="contained" color="primary">Item 2</Button>
-                <Button fullWidth variant="contained" color="primary">Item 3</Button>
-              </Paper>
-            </Grid>
-            <Grid item xs={9}>
-              <Paper elevation={3} style={{ padding: '16px' }}>
-                <Typography variant="h6">Form</Typography>
-                <TextField label="Name" fullWidth margin="normal" />
-                <TextField label="Email" type="email" fullWidth margin="normal" />
-                <Button variant="contained" color="primary">Submit</Button>
-              </Paper>
-            </Grid>
-          </Grid>
-        </Container>
+        <div>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6">Sliding Menu App</Typography>
+            </Toolbar>
+          </AppBar>
+          <Drawer anchor="left" open={open} onClose={toggleDrawer}>
+            <List>
+              {menuItems.map((text) => (
+                <ListItem button key={text}>
+                  <ListItemText primary={text} />
+                </ListItem>
+              ))}
+            </List>
+          </Drawer>
+        </div>
       );
     };
 
