@@ -2,7 +2,7 @@ import React, { useState } from 'react';
     import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Button } from '@mui/material';
     import MenuIcon from '@mui/icons-material/Menu';
 
-    const App = () => {
+    const App: React.FC = () => {
       const [open, setOpen] = useState(false);
 
       const toggleDrawer = () => {
