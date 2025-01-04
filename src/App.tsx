@@ -1,40 +1,50 @@
-import React, { useState } from 'react';
-    import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Button } from '@mui/material';
-    import MenuIcon from '@mui/icons-material/Menu';
+import { Box, CssBaseline, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
+    import { Home, Login } from '@mui/icons-material';
+    import { Outlet, Link } from 'react-router-dom';
 
-    const App: React.FC = () => {
-      const [open, setOpen] = useState(false);
+    const drawerWidth = 240;
 
-      const toggleDrawer = () => {
-        setOpen(!open);
-      };
-
-      const menuItems = ['Home', 'Login'];
-
+    export default function App() {
       return (
-        <div>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
-                <MenuIcon />
-              </IconButton>
-              <Typography variant="h6">Sliding Menu App</Typography>
-              <Button color="inherit" onClick={toggleDrawer} style={{ marginLeft: 'auto' }}>
-                Open Menu
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <Drawer anchor="left" open={open} onClose={toggleDrawer}>
-            <List>
-              {menuItems.map((text) => (
-                <ListItem button key={text}>
-                  <ListItemText primary={text} />
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <Drawer
+            variant="permanent"
+            sx={{
+              width: drawerWidth,
+              flexShrink: 0,
+              '& .MuiDrawer-paper': {
+                width: drawerWidth,
+                boxSizing: 'border-box',
+              },
+            }}
+          >
+            <Toolbar />
+            <Box sx={{ overflow: 'auto' }}>
+              <List>
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to="/">
+                    <ListItemIcon>
+                      <Home />
+                    </ListItemIcon>
+                    <ListItemText primary="Home" />
+                  </ListItemButton>
                 </ListItem>
-              ))}
-            </List>
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to="/login">
+                    <ListItemIcon>
+                      <Login />
+                    </ListItemIcon>
+                    <ListItemText primary="Login" />
+                  </ListItemButton>
+                </ListItem>
+              </List>
+            </Box>
           </Drawer>
-        </div>
+          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+            <Toolbar />
+            <Outlet />
+          </Box>
+        </Box>
       );
-    };
-
-    export default App;
+    }
