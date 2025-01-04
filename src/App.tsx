@@ -1,50 +1,40 @@
-import { Box, CssBaseline, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar } from '@mui/material';
-    import { Home, Login } from '@mui/icons-material';
-    import { Outlet, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+    import { AppBar, Toolbar, IconButton, Typography, Drawer, List, ListItem, ListItemText, Button } from '@mui/material';
+    import MenuIcon from '@mui/icons-material/Menu';
 
-    const drawerWidth = 240;
+    const App: React.FC = () => {
+      const [open, setOpen] = useState(false);
 
-    export default function App() {
+      const toggleDrawer = () => {
+        setOpen(!open);
+      };
+
+      const menuItems = ['Home', 'Login'];
+
       return (
-        <Box sx={{ display: 'flex' }}>
-          <CssBaseline />
-          <Drawer
-            variant="permanent"
-            sx={{
-              width: drawerWidth,
-              flexShrink: 0,
-              '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-              },
-            }}
-          >
-            <Toolbar />
-            <Box sx={{ overflow: 'auto' }}>
-              <List>
-                <ListItem disablePadding>
-                  <ListItemButton component={Link} to="/">
-                    <ListItemIcon>
-                      <Home />
-                    </ListItemIcon>
-                    <ListItemText primary="Home" />
-                  </ListItemButton>
+        <div>
+          <AppBar position="static">
+            <Toolbar>
+              <IconButton edge="start" color="inherit" onClick={toggleDrawer}>
+                <MenuIcon />
+              </IconButton>
+              <Typography variant="h6">Sliding Menu App</Typography>
+              <Button color="inherit" onClick={toggleDrawer} style={{ marginLeft: 'auto' }}>
+                Open Menu
+              </Button>
+            </Toolbar>
+          </AppBar>
+          <Drawer anchor="left" open={open} onClose={toggleDrawer}>
+            <List>
+              {menuItems.map((text) => (
+                <ListItem button key={text}>
+                  <ListItemText primary={text} />
                 </ListItem>
-                <ListItem disablePadding>
-                  <ListItemButton component={Link} to="/login">
-                    <ListItemIcon>
-                      <Login />
-                    </ListItemIcon>
-                    <ListItemText primary="Login" />
-                  </ListItemButton>
-                </ListItem>
-              </List>
-            </Box>
+              ))}
+            </List>
           </Drawer>
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-            <Toolbar />
-            <Outlet />
-          </Box>
-        </Box>
+        </div>
       );
-    }
+    };
+
+    export default App;
